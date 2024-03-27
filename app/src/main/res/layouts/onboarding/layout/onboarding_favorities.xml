@@ -16,7 +16,7 @@
         app:srcCompat="@drawable/onboarding_favorities" />
 
     <Button
-        android:id="@+id/bt_next"
+        android:id="@+id/bt_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="60dp"

@@ -1,18 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".MapFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </fragment>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="29dp"
+            android:layout_marginEnd="219dp"
+            android:background="@drawable/sdsdsd"
+            app:layout_constraintEnd_toStartOf="@+id/notificiation"
+            app:layout_constraintHorizontal_bias="0.021"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/group" />
+
+        <ImageButton
+            android:id="@+id/notificiation"
+            android:layout_width="45dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="29dp"
+            android:layout_marginEnd="33dp"
+            android:background="@drawable/sdsdsd"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/location_notification2" />
+
+        <ImageView
+            android:id="@+id/frame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/location_frame2" />
+
+        <TextView
+            android:id="@+id/your_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="136dp"
+            android:fontFamily="@font/poppins"
+            android:gravity="center"
+            android:lineHeight="19sp"
+            android:text="Your location"
+            android:textColor="#3B3B3B"
+            android:textFontWeight="500"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/frame"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/frame"
+            app:layout_constraintTop_toTopOf="@+id/frame"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/locationTextView"
+            android:layout_width="256dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginEnd="18dp"
+            android:layout_marginBottom="20dp"
+            android:accessibilityLiveRegion="none"
+            android:fontFamily="@font/poppins"
+            android:text="TextView"
+            app:layout_constraintBottom_toTopOf="@+id/bt_location"
+            app:layout_constraintEnd_toEndOf="@+id/frame"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/location_icon"
+            app:layout_constraintTop_toBottomOf="@+id/your_location"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <Button
+            android:id="@+id/bt_location"
+            android:layout_width="322dp"
+            android:layout_height="57dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/button_gradient"
+            android:fontFamily="@font/poppins"
+            android:text="Set Location"
+            android:textColor="@color/white"
+            android:textFontWeight="700"
+            app:backgroundTint="@null"
+            app:layout_constraintBottom_toBottomOf="@+id/frame"
+            app:layout_constraintEnd_toEndOf="@+id/frame"
+            app:layout_constraintStart_toStartOf="@+id/frame" />
+
+        <ImageView
+            android:id="@+id/location_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="11dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginBottom="27dp"
+            app:layout_constraintBottom_toTopOf="@+id/bt_location"
+            app:layout_constraintStart_toStartOf="@+id/frame"
+            app:layout_constraintTop_toBottomOf="@+id/your_location"
+            app:srcCompat="@drawable/location_location" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>
