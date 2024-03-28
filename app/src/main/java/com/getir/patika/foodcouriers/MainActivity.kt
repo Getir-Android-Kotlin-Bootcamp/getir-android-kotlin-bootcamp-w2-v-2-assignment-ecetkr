@@ -54,8 +54,8 @@ private lateinit var mapFragment: MapFragment
                     mapFragment = (supportFragmentManager.findFragmentById(R.id.map) as MapFragment?)!!
                     mapFragment?.updateMapLocation(location.latitude, location.longitude)
                     locationTextView= findViewById(R.id.locationTextView)
+                    locationTextView.text= getAddress(location.latitude, location.longitude)
                     location_search= findViewById(R.id.location_search)
-                   // location_search.setQuery(getAddress(location.latitude,location.longitude), false)
                     location_search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                         override fun onQueryTextSubmit(query: String?): Boolean {
                             query?.let { searchAddress(it) }
@@ -66,8 +66,6 @@ private lateinit var mapFragment: MapFragment
                             return false
                         }
                     })
-
-                    locationTextView.text= getAddress(location.latitude, location.longitude)
                 }
                 .addOnFailureListener { exception ->
                 }

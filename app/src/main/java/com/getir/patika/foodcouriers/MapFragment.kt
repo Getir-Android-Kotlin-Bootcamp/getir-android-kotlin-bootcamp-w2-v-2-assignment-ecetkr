@@ -21,13 +21,18 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.Circle
 import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 
 
 class MapFragment : Fragment(),OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
+    private var marker: Marker? = null
+    private var circle1: Circle?= null
+    private var circle2:Circle?= null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,11 +50,27 @@ class MapFragment : Fragment(),OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        val initialLocation= LatLng(0.0,0.0)
+        val circleOptions= CircleOptions()
+            .center(initialLocation)
+            .radius(100.0)
+        circle1= mMap.addCircle(circleOptions)
+        circle2=mMap.addCircle(circleOptions)
+        marker= mMap.addMarker(MarkerOptions()
+            .icon(this.context?.let { bitmapFromVector(it, R.drawable.placeholder) })
+            .position(initialLocation))
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(initialLocation))
     }
     @SuppressLint("MissingPermission")
     fun updateMapLocation(latitude: Double, longitude: Double) {
+        marker?.remove()
+        circle1?.remove()
+        circle2?.remove()
+
         val location = LatLng(latitude, longitude)
-        val markerOptions = MarkerOptions().position(location)
+        marker = mMap.addMarker(MarkerOptions()
+            .icon(this.context?.let { bitmapFromVector(it, R.drawable.placeholder) })
+            .position(location))
         val circleOptions1 = CircleOptions()
             .center(location)
             .radius(50.0)
@@ -62,11 +83,9 @@ class MapFragment : Fragment(),OnMapReadyCallback {
             .strokeWidth(0f) // Adjust the stroke width as needed
             .fillColor(Color.argb((0.21 * 255).toInt(), 214, 19, 85)) // Set the fill color to transparent
 
-        mMap.addCircle(circleOptions1)
-        mMap.addCircle(circleOptions2)
-        markerOptions.icon(this.context?.let { bitmapFromVector(it, R.drawable.placeholder) })
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15f))
-        mMap.addMarker(markerOptions)
+        circle1= mMap.addCircle(circleOptions1)
+        circle2= mMap.addCircle(circleOptions2)
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 16f))
     }
 
     private fun bitmapFromVector(context: Context, vectorResId:Int): BitmapDescriptor? {
