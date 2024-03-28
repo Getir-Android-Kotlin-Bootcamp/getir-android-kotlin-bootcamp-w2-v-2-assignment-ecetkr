@@ -70,7 +70,7 @@
         android:background="@drawable/sdsdsd"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/location_notification" />
+        app:srcCompat="@drawable/location_notification2" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

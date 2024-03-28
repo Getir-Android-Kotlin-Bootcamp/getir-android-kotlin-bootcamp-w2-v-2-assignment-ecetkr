@@ -120,6 +120,32 @@
             app:layout_constraintStart_toStartOf="@+id/frame"
             app:layout_constraintTop_toBottomOf="@+id/your_location"
             app:srcCompat="@drawable/location_location" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="311dp"
+            android:layout_height="43dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="1dp"
+            app:layout_constraintEnd_toEndOf="@+id/notificiation"
+            app:layout_constraintHorizontal_bias="0.542"
+            app:layout_constraintStart_toStartOf="@+id/back"
+            app:layout_constraintTop_toBottomOf="@+id/back"
+            app:cardCornerRadius="5dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/search_view_gradient">
+                <SearchView
+                    android:id="@+id/location_search"
+                    android:layout_width="311dp"
+                    android:layout_height="43dp"
+                    android:queryHint="Where is your location"
+                    android:queryBackground="@drawable/search_view_gradient"
+                    android:focusable="true"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>

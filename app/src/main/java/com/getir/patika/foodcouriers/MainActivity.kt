@@ -6,7 +6,9 @@ import android.location.Geocoder
 import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.SearchView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -20,6 +22,7 @@ class MainActivity : AppCompatActivity() {
 //    private lateinit var pagerAdapter: PagerAdapter
 private lateinit var fusedLocationClient: FusedLocationProviderClient
 private lateinit var locationTextView: TextView
+private lateinit var location_search: SearchView
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +52,8 @@ private lateinit var locationTextView: TextView
                     val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as MapFragment?
                     mapFragment?.updateMapLocation(location.latitude, location.longitude)
                     locationTextView= findViewById(R.id.locationTextView)
-                    //locationTextView.text= "${location.latitude}, ${location.longitude}"
+                    location_search= findViewById(R.id.location_search)
+                    location_search.setQuery(getAddress(location.latitude,location.longitude), false)
                     locationTextView.text= getAddress(location.latitude, location.longitude)
                 }
                 .addOnFailureListener { exception ->
