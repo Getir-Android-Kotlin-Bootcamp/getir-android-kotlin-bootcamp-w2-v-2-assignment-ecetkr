@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,6 +24,7 @@ class MainActivity : AppCompatActivity() {
 private lateinit var fusedLocationClient: FusedLocationProviderClient
 private lateinit var locationTextView: TextView
 private lateinit var location_search: SearchView
+private lateinit var mapFragment: MapFragment
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,11 +51,22 @@ private lateinit var location_search: SearchView
             // Permission already granted
             fusedLocationClient.lastLocation
                 .addOnSuccessListener { location : Location ->
-                    val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as MapFragment?
+                    mapFragment = (supportFragmentManager.findFragmentById(R.id.map) as MapFragment?)!!
                     mapFragment?.updateMapLocation(location.latitude, location.longitude)
                     locationTextView= findViewById(R.id.locationTextView)
                     location_search= findViewById(R.id.location_search)
-                    location_search.setQuery(getAddress(location.latitude,location.longitude), false)
+                   // location_search.setQuery(getAddress(location.latitude,location.longitude), false)
+                    location_search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                        override fun onQueryTextSubmit(query: String?): Boolean {
+                            query?.let { searchAddress(it) }
+                            return true
+                        }
+
+                        override fun onQueryTextChange(newText: String?): Boolean {
+                            return false
+                        }
+                    })
+
                     locationTextView.text= getAddress(location.latitude, location.longitude)
                 }
                 .addOnFailureListener { exception ->
@@ -92,6 +105,27 @@ private lateinit var location_search: SearchView
         val geocoder= Geocoder(this)
         val list= geocoder.getFromLocation(lat, longitude, 1)
         return list?.get(0)?.getAddressLine(0)
+    }
+
+    private fun searchAddress(query: String) {
+        val geocoder = Geocoder(this, Locale.getDefault())
+        val addresses = geocoder.getFromLocationName(query, 1)
+
+        if (addresses != null) {
+            if (addresses.isNotEmpty()) {
+                val address = addresses[0]
+                val latitude = address.latitude
+                val longitude = address.longitude
+
+                // Update map with searched location
+                mapFragment.updateMapLocation(latitude, longitude)
+
+                // Update TextView with searched address
+                locationTextView.text = address.getAddressLine(0)
+            } else {
+                locationTextView.text = "Address not found"
+            }
+        }
     }
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 100
