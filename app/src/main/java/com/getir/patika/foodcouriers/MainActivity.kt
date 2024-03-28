@@ -6,6 +6,7 @@ import android.location.Geocoder
 import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
@@ -23,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 //    private lateinit var pagerAdapter: PagerAdapter
 private lateinit var fusedLocationClient: FusedLocationProviderClient
 private lateinit var locationTextView: TextView
-private lateinit var location_search: SearchView
+private lateinit var locationSearch: SearchView
 private lateinit var mapFragment: MapFragment
 
     @SuppressLint("SetTextI18n")
@@ -55,8 +56,8 @@ private lateinit var mapFragment: MapFragment
                     mapFragment?.updateMapLocation(location.latitude, location.longitude)
                     locationTextView= findViewById(R.id.locationTextView)
                     locationTextView.text= getAddress(location.latitude, location.longitude)
-                    location_search= findViewById(R.id.location_search)
-                    location_search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                    locationSearch= findViewById(R.id.location_search)
+                    locationSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                         override fun onQueryTextSubmit(query: String?): Boolean {
                             query?.let { searchAddress(it) }
                             return true
@@ -85,16 +86,30 @@ private lateinit var mapFragment: MapFragment
                 // Permission granted, get location
                 fusedLocationClient.lastLocation
                     .addOnSuccessListener { location : Location ->
-                        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as MapFragment?
+                        var mapFragment = supportFragmentManager.findFragmentById(R.id.map) as MapFragment?
                         mapFragment?.updateMapLocation(location.latitude, location.longitude)
+                        locationTextView= findViewById(R.id.locationTextView)
+                        locationTextView.text= getAddress(location.latitude, location.longitude)
+                        locationSearch= findViewById(R.id.location_search)
+                        locationSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                            override fun onQueryTextSubmit(query: String?): Boolean {
+                                query?.let { searchAddress(it) }
+                                return true
+                            }
+
+                            override fun onQueryTextChange(newText: String?): Boolean {
+                                return false
+                            }
+                        })
 
                     }
                     .addOnFailureListener { exception ->
-                        //TODO Handle failure
+                        Log.e("PermissionError", "Failed to get permission: $exception")
+                        Toast.makeText(this, "Failed to get permission", Toast.LENGTH_SHORT).show()
                     }
 
             } else {
-                //TODO Permission denied, handle accordingly
+                Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT).show()
             }
         }
     }
