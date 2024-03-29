@@ -23,7 +23,7 @@ Demo videosuna aşağıdaki görsele ya da linke tıklayarak ulaşabilirsiniz.
 - Proje katmanında, API Key local.defaults.properties üzerinden değiştirilebilir
 - Emulator ya da cihaz üzerinden projeyi çalıştır
 
-### Sorunlar ve Geçiçi Çözümleri
+### Sorunlar ve Geçici Çözümleri
 
 - Sorun: Uygulama ilk defa açıldığında SearchView hata veriyor.
 
